@@ -1,6 +1,8 @@
 #include "protocol.h"
 #include <Arduino.h>
 
+#define SPEED_PIN 13
+
 uint8_t recv[PROTOCOL_DATA_SIZE];
 boolean flash = false;
 uint32_t flash_cnt = 0;
@@ -8,6 +10,8 @@ boolean led_on = false;
 uint8_t recvIndex = 0;
 uint8_t recvSizeCurrent = 0;
 uint32_t lastReceiveTime;
+
+uint8_t speed_mph = 0;
 
 void setup() {
   // initialize serial:
@@ -47,6 +51,10 @@ uint8_t getCommandLen(uint8_t command) {
   }
 
   return 0;
+}
+
+updateSpeed() {
+
 }
 
 void processCommand() {
