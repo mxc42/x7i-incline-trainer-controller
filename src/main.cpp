@@ -1,7 +1,8 @@
 #include "protocol.h"
 #include <Arduino.h>
 
-#define SPEED_PIN 13
+/*/
+#define SPEED_PIN 9
 
 uint8_t recv[PROTOCOL_DATA_SIZE];
 boolean flash = false;
@@ -19,6 +20,10 @@ void setup() {
   Serial.setTimeout(1000);
   pinMode(LED_BUILTIN, OUTPUT);
   digitalWrite(LED_BUILTIN, LOW);
+
+  pinMode(SPEED_PIN, OUTPUT);
+  digitalWrite(SPEED_PIN, 0);
+  analogWrite(SPEED_PIN, 150);
 }
 
 void printHex(uint8_t num) {
@@ -53,7 +58,7 @@ uint8_t getCommandLen(uint8_t command) {
   return 0;
 }
 
-updateSpeed() {
+void updateSpeed() {
 
 }
 
@@ -110,7 +115,6 @@ void processCommand() {
     recv[i] = 0x42;
   }
   Serial.println();
-  */
 }
 
 void loop() {
@@ -143,4 +147,29 @@ void loop() {
   if (millis() - lastReceiveTime >= 100) {
     recvIndex = 0;
   }
+}
+*/
+#include <TimerOne.h> 
+#define PWM_OUT 9
+#define PWM_CYCLE 50.0   //Output Signal PWM Period (50ms)
+float duty = .1;
+int onTime;
+void setup() {
+  pinMode(PWM_OUT, OUTPUT);
+  pinMode(13, OUTPUT);
+  Timer1.initialize(PWM_CYCLE * 1000); // Set pin 9 and 10 period to 50 ms
+
+  Timer1.pwm(PWM_OUT, 200); // Start PWM at 0% duty cycle
+}
+
+void loop() {
+  /*
+  onTime = floor(duty * 50);
+  digitalWrite(PWM_OUT, HIGH);
+  digitalWrite(13, HIGH);
+  delay(onTime);
+  digitalWrite(PWM_OUT, LOW);
+  digitalWrite(13, LOW);
+  delay(50 - onTime);
+*/
 }
